@@ -15,7 +15,8 @@ create_ingredients_table = '''
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         type TEXT CHECK(type IN ('liquor', 'mixer', 'other')),
-        pantry INTEGER NOT NULL
+        pantry INTEGER NOT NULL,
+        UNIQUE(name, type)
     )
 '''
 
@@ -23,7 +24,7 @@ create_ingredients_table = '''
 create_drinks_table = '''
     CREATE TABLE drinks (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
+        name TEXT NOT NULL UNIQUE,
         description TEXT,
         ingredient_id INTEGER,
         measure REAL,
