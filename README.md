@@ -1,6 +1,9 @@
 IN PROGRESS
 
 A Bartender Robot!
+
+Created using python and SQLite
+
 Lets you enter ingredients that you have, and returns drinks that you can make with them.
 Kind of like Supercook for cocktails
 
