@@ -11,10 +11,10 @@ cursor = connection.cursor()
 
 # SQL statements for creating the ingredients table
 create_ingredients_table = '''
-    CREATE TABLE ingredients (
+    CREATE TABLE IF NOT EXISTS ingredients (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
-        type TEXT CHECK(type IN ('liquor', 'mixer', 'other')),
+        type TEXT CHECK(type IN ('Liquor', 'Mixer', 'Other')),
         pantry INTEGER NOT NULL,
         UNIQUE(name, type)
     )
@@ -22,19 +22,29 @@ create_ingredients_table = '''
 
 # SQL statements for creating the drinks table
 create_drinks_table = '''
-    CREATE TABLE drinks (
+    CREATE TABLE IF NOT EXISTS drinks (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL UNIQUE,
         description TEXT,
-        ingredient_id INTEGER,
-        measure REAL,
-        FOREIGN KEY (ingredient_id) REFERENCES ingredients (id)
+        favorite REAL
     )
+'''
+
+create_drink_ingredients_table = '''
+    CREATE TABLE IF NOT EXISTS drink_ingredients (
+        drink_id INTEGER,
+        ingredient_id INTEGER,
+        measure TEXT,
+        PRIMARY KEY (drink_id, ingredient_id),
+        FOREIGN KEY (drink_id) REFERENCES drinks (id),
+        FOREIGN KEY (ingredient_id) REFERENCES ingredients (id)
+)
 '''
 
 # Execute the CREATE TABLE statements separately
 cursor.execute(create_ingredients_table)
 cursor.execute(create_drinks_table)
+cursor.execute(create_drink_ingredients_table)
 
 # commit and close the changes
 connection.commit()
